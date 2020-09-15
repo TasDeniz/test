@@ -7,8 +7,8 @@ cache:
   directories:
     - $HOME/.m2
 before_script:
-  - psql -c "CREATE USER $USER WITH PASSWORD '$PASSWORD';" -U postgres
-  - psql -c "ALTER ROLE $USER SUPERUSER"
+  - psql -c "CREATE USER $USERNAME WITH PASSWORD '$PASSWORD';" -U postgres
+  - psql -c "ALTER ROLE $USERNAME SUPERUSER"
   - psql -c "CREATE DATABASE $DB;" -U postgres
 install: true
 script:
