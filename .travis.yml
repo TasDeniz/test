@@ -1,15 +1,19 @@
 language: java
 jdk:
   - openjdk11
+env:
+  - DB=iws
+  - PASSWORD=iws
+  - USER=iws
 services:
   - postgresql
 cache:
   directories:
     - $HOME/.m2
 before_script:
-  - psql -c "CREATE USER iws WITH PASSWORD 'iws';" -U postgres
-  - psql -c "ALTER ROLE iws SUPERUSER"
-  - psql -c 'create database iws;' -U postgres
+  - psql -c "CREATE USER $USER WITH PASSWORD $PASSWORD;" -U postgres
+  - psql -c "ALTER ROLE $USER SUPERUSER"
+  - psql -c 'create database $DB;' -U postgres
   - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/6.5.5/flyway-commandline-6.5.5-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-6.5.5/flyway /usr/local/bin
 install: true
 script:
