@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - openjdk11
+services:
+  - postgresql
+cache:
+  directories:
+    - $HOME/.m2
+before_script:
+  - psql -c 'create database iws;' -U postgres
+  - psql -c "CREATE USER iws WITH PASSWORD 'iws';" -U postgres
+  - wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/6.5.5/flyway-commandline-6.5.5-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-6.5.5/flyway /usr/local/bin
+install: true
+script:
+  - "mvn clean flyway:migrate jooq-codegen:generate"
