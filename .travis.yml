@@ -3,6 +3,7 @@ jdk:
   - openjdk11
 services:
   - postgresql
+  - docker
 cache:
   directories:
     - $HOME/.m2
@@ -12,4 +13,6 @@ before_script:
   - psql -c "CREATE DATABASE $DB;" -U postgres
 install: true
 script:
-  - "mvn clean flyway:migrate jooq-codegen:generate"
+  - "mvn clean flyway:migrate jooq-codegen:generate install"
+after_success:
+  -  docker build -t my_example_app .
