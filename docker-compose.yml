@@ -1,0 +1,38 @@
+version: '3.4'
+services:
+  web:
+    build: .
+    container_name: "web"
+    environment:
+      POSTGRES_HOST: "db"
+      POSTGRES_DB: "iws"
+      POSTGRES_USER: "iws"
+      POSTGRES_PASS: "iws"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "db"
+    networks:
+      - "db_connection"
+
+  db:
+    container_name: "db"
+    image: postgres:10.11
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: "iws"
+      POSTGRES_USER: "iws"
+      POSTGRES_PASSWORD: "iws"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - "db_connection"
+
+volumes:
+  postgres_data:
+
+networks:
+  db_connection:
+    driver: "bridge"
