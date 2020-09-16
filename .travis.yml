@@ -23,4 +23,4 @@ script:
   - "mvn clean flyway:migrate jooq-codegen:generate install"
 after_success:
   -  docker build -t my_example_app .
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; docker push my_example_app; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; docker push $DOCKER_USERNAME/my_example_app; fi
